@@ -1,4 +1,5 @@
 import sys
+import threading
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 import spammer as sp
@@ -173,10 +174,12 @@ def ShowHelpsAndNotes():
 def StartSpamButtonClicked():
     if FirstSection == 2:
         CustomSpamTextBoxValue = CustomSpamTextBox.text()
-        sp.startSpamCustom(SecondSection, CustomSpamTextBoxValue)
+        thread = threading.Thread(target=sp.startSpamCustom,args=(SecondSection, CustomSpamTextBoxValue))
+        thread.start()
     
     elif FirstSection == 1:
-        sp.startSpamDefault(SecondSection)
+        thread = threading.Thread(target=sp.startSpamDefault,args=(SecondSection,))
+        thread.start()
 
 def BackButtonClicked():
     try:
